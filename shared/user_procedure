@@ -1,0 +1,53 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_check_user_login`(
+    IN p_email VARCHAR(255)
+)
+BEGIN
+    SELECT 
+        id AS ID,
+        first_name AS FirstName,
+        last_name AS LastName,
+        email AS Email,
+        user_name AS UserName,
+        mobile_number AS MobileNumber,
+        password AS HashedPassword
+    FROM users
+    WHERE email = p_email
+    LIMIT 1;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_delete`(IN p_id INT)
+BEGIN
+    IF EXISTS (SELECT 1 FROM `users` WHERE id = p_id) THEN
+        DELETE FROM `users` WHERE id = p_id;
+    ELSE
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'User not found';
+    END IF;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_exists_check`(IN `p_user` VARCHAR(50))
+BEGIN 
+  select count(*) from users where email =p_user or user_name=p_user ;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_get_details`(IN `p_id` INT)
+BEGIN
+    SELECT *
+    FROM users 
+    WHERE id = p_id;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_update`(IN `p_id` INT, IN `p_first_name` VARCHAR(100), IN `p_last_name` VARCHAR(100), IN `p_email` VARCHAR(255), IN `p_user_name` VARCHAR(255))
+BEGIN
+    UPDATE users 
+    SET 
+        first_name = p_first_name,
+        last_name = p_last_name,
+        email = p_email,
+        user_name = p_user_name,
+        updated_at = NOW()
+    WHERE id = p_id;
+END

@@ -1,0 +1,5 @@
+database:
+  type: mysql  
+  product_db: "${PRODUCT_DB_DSN}"
+  user_db: "${USER_DB_DSN}"
+  order_db: "${ORDER_DB_DSN}"

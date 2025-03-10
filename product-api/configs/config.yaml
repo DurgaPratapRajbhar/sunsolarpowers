@@ -1,0 +1,4 @@
+database:
+  type:  mysql  
+  product_db: "root:@tcp(127.0.0.1:3306)/product_db?parseTime=true"
+  user_db: "root:@tcp(127.0.0.1:3306)/user_db?parseTime=true"

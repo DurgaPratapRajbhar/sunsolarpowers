@@ -1,0 +1,8 @@
+go 1.23.7
+
+use (
+	./logging-service
+	./product-api
+	./shared
+	./user-service-api
+)
